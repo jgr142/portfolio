@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 func home(w http.ResponseWriter, r *http.Request) {
@@ -10,7 +12,14 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func projectView(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Display a specific project..."))
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil || id < 1 {
+		http.NotFound(w, r)
+		return
+	}
+
+	msg := fmt.Sprintf("Display a specific project with ID %d...", id)
+	w.Write([]byte(msg))
 }
 
 func projectCreate(w http.ResponseWriter, r *http.Request) {
