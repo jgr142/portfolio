@@ -31,11 +31,7 @@ func snippetCreatePost(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("GET /{$}", home)
-	mux.HandleFunc("GET /project/view/{id}", projectView)
-	mux.HandleFunc("GET /project/create", projectCreate)
-	mux.HandleFunc("POST /snippet/create", snippetCreatePost)
+	mux := routes()
 	log.Print("starting server on :4000")
 	err := http.ListenAndServe(":4000", mux)
 	log.Fatal(err)
