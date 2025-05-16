@@ -13,8 +13,10 @@ type application struct {
 func main() {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
+	app := application{logger: logger}
+
 	logger.Info("starting server on :4000")
 
-	err := http.ListenAndServe(":4000", routes())
+	err := http.ListenAndServe(":4000", app.routes())
 	logger.Error(err.Error())
 }

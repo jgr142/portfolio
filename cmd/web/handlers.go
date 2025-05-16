@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func home(w http.ResponseWriter, r *http.Request) {
+func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
 	files := []string{
 		"./ui/html/base.tmpl.html",
@@ -32,7 +32,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func projectView(w http.ResponseWriter, r *http.Request) {
+func (app *application) projectView(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil || id < 1 {
 		http.NotFound(w, r)
@@ -63,7 +63,7 @@ func projectView(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func projectCreate(w http.ResponseWriter, r *http.Request) {
+func (app *application) projectCreate(w http.ResponseWriter, r *http.Request) {
 	files := []string{
 		"./ui/html/base.tmpl.html",
 		"./ui/html/pages/create.tmpl.html",
@@ -88,6 +88,6 @@ func projectCreate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func snippetCreatePost(w http.ResponseWriter, r *http.Request) {
+func (app *application) snippetCreatePost(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Save a new project..."))
 }
