@@ -27,9 +27,9 @@ func projectCreate(w http.ResponseWriter, r *http.Request) {
 }
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/{$}", home)
-	mux.HandleFunc("/project/view/{id}", projectView)
-	mux.HandleFunc("/project/create", projectCreate)
+	mux.HandleFunc("GET /{$}", home)
+	mux.HandleFunc("GET /project/view/{id}", projectView)
+	mux.HandleFunc("GET /project/create", projectCreate)
 	log.Print("starting server on :4000")
 	err := http.ListenAndServe(":4000", mux)
 	log.Fatal(err)
