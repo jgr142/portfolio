@@ -6,8 +6,9 @@ import (
 	"os"
 )
 
-func main() {
-	mux := routes()
+type application struct {
+	logger *slog.Logger
+}
 
 func main() {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
