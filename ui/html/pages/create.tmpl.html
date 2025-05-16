@@ -1,0 +1,23 @@
+{{define "title"}}Showcase Project{{end}} {{define "main"}}
+<form action="/project/create" method="POST">
+  <div>
+    <label>Title:</label>
+    <input type="text" name="title" />
+  </div>
+  <div>
+    <label>Description:</label>
+    <textarea name="description"></textarea>
+  </div>
+  <div>
+    <label>Link:</label>
+    <textarea name="link"></textarea>
+  </div>
+  <div>
+    <label>Image:</label>
+    <input type="file" accept="image/png, image/jpeg" />
+  </div>
+  <div>
+    <input type="submit" value="Publish Snippet" />
+  </div>
+</form>
+{{end}}
