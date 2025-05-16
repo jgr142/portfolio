@@ -1,13 +1,18 @@
 package main
 
 import (
-	"log"
+	"log/slog"
 	"net/http"
+	"os"
 )
 
 func main() {
 	mux := routes()
-	log.Print("starting server on :4000")
+
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+
+	logger.Info("starting server on :4000")
+
 	err := http.ListenAndServe(":4000", mux)
-	log.Fatal(err)
+	logger.Error(err.Error())
 }
