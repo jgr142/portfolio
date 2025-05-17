@@ -1,12 +1,12 @@
-{{define "title"}}Project [[TODO: ADD PROJ NAME]]{{end}} {{define "main"}}
+{{define "title"}}Project: {{.Project.Title}}{{end}} {{define "main"}} {{with
+.Project}}
 <div>
   <div>
-    <strong>Project Name TODO</strong>
+    <strong>{{.Title}}</strong>
   </div>
-  <pre><code>content TODO</code></pre>
+  <pre><code>{{.Description}}</code></pre>
   <div class="metadata">
-    <time></time>
-    <time></time>
+    <time>{{.Created}}</time>
   </div>
 </div>
-{{end}}
+{{end}} {{end}}
