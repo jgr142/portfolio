@@ -1,22 +1,20 @@
 package main
 
 import (
-	"log/slog"
 	"net/http"
-	"os"
+
+	"github.com/jgr142/portfolio/internal/core"
+	"github.com/jgr142/portfolio/internal/web"
 )
 
-type application struct {
-	logger *slog.Logger
-}
-
 func main() {
-	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	core := core.New(nil)
 
-	app := application{logger: logger}
+	handlers := web.InitHandlers(core.Logger)
+	mux := web.InitMux(handlers)
 
-	logger.Info("starting server on :4000")
+	core.Logger.Info("starting server on :4000")
 
-	err := http.ListenAndServe(":4000", app.routes())
-	logger.Error(err.Error())
+	err := http.ListenAndServe(":4000", mux)
+	core.Logger.Error(err.Error())
 }
