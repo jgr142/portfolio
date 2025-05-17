@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"log/slog"
 	"net/http"
 	"os"
 
@@ -36,7 +37,7 @@ func main() {
 	handlers := web.InitHandlers(dal, tCache, p.Logger)
 	mux := web.InitMux(handlers)
 
-	p.Logger.Info("starting server on %s", addr)
+	p.Logger.Info("starting server on %s", slog.String("addr", *addr))
 
 	err = http.ListenAndServe(*addr, mux)
 	p.Logger.Error(err.Error())
