@@ -22,10 +22,10 @@ type templateCache struct {
 func (h *Handler) render(
 	w http.ResponseWriter,
 	r *http.Request,
-	files []string,
+	pageName string,
 	data templateData,
 ) {
-	tp, err := template.ParseFiles(files...)
+	tp, err := h.tCache.Get(pageName)
 	if err != nil {
 		h.serverError(w, r, err)
 		return

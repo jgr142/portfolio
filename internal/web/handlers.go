@@ -17,12 +17,6 @@ func InitHandlers(dal DAL, tCache templateCache, logger *slog.Logger) Handler {
 }
 
 func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
-
-	files := []string{
-		"./ui/html/base.tmpl.html",
-		"./ui/html/pages/home.tmpl.html",
-	}
-
 	projects, err := h.dal.Latest()
 	if err != nil {
 		h.serverError(w, r, err)
@@ -31,7 +25,7 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 
 	data := templateData{Projects: projects}
 
-	h.render(w, r, files, data)
+	h.render(w, r, "home", data)
 }
 
 func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
@@ -39,11 +33,6 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 	if err != nil || id < 1 {
 		h.clientError(w, http.StatusNotFound)
 		return
-	}
-
-	files := []string{
-		"./ui/html/base.tmpl.html",
-		"./ui/html/pages/view.tmpl.html",
 	}
 
 	project, err := h.dal.Get(id)
@@ -54,16 +43,11 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 
 	data := templateData{Project: project}
 
-	h.render(w, r, files, data)
+	h.render(w, r, "view", data)
 }
 
 func (h *Handler) projectCreate(w http.ResponseWriter, r *http.Request) {
-	files := []string{
-		"./ui/html/base.tmpl.html",
-		"./ui/html/pages/create.tmpl.html",
-	}
-
-	h.render(w, r, files, templateData{})
+	h.render(w, r, "create", templateData{})
 }
 
 func (h *Handler) projectCreatePost(w http.ResponseWriter, r *http.Request) {
