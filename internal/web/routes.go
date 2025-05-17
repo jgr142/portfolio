@@ -16,7 +16,7 @@ func (r *Router) routes() http.Handler {
 	mux.HandleFunc("GET /{$}", r.h.home)
 	mux.HandleFunc("GET /project/view/{id}", r.h.projectView)
 	mux.HandleFunc("GET /project/create", r.h.projectCreate)
-	mux.HandleFunc("POST /snippet/create", r.h.snippetCreatePost)
+	mux.HandleFunc("POST /snippet/create", r.h.projectCreatePost)
 
 	return mux
 }

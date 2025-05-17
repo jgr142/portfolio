@@ -98,7 +98,7 @@ func (m *ProjectModel) Insert(
 	img string,
 	created int,
 ) (int, error) {
-	stmt := `INSERT INTO snippets (title, description, img, created)
+	stmt := `INSERT INTO projects (title, description, img, created)
 	VALUES(?, ?, ?, ?,))`
 
 	res, err := m.DB.Exec(stmt, title, desc, img, created)

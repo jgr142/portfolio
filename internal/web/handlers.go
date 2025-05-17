@@ -65,6 +65,6 @@ func (h *Handler) projectCreate(w http.ResponseWriter, r *http.Request) {
 	h.render(w, r, files, templateData{})
 }
 
-func (h *Handler) snippetCreatePost(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) projectCreatePost(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Save a new project..."))
 }
