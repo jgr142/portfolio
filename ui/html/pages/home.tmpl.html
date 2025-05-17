@@ -5,12 +5,20 @@
   <tr>
     <th>Title</th>
     <th>Created</th>
+    <th>Image</th>
     <th>Description</th>
   </tr>
   {{range .Projects}}
   <tr>
     <td><a href="./project/view/{{.ID}}">{{.Title}}</a></td>
     <td>{{.Created}}</td>
+    <td>
+      <img
+        src="/static/img/{{.Image}}"
+        alt="Project image"
+        style="max-width: 100px; height: auto"
+      />
+    </td>
     <td>{{.Description}}</td>
   </tr>
   {{end}}
