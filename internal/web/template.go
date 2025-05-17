@@ -7,13 +7,19 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/jgr142/portfolio/internal/models"
 )
 
 type templateData struct {
-	Project  models.Project
-	Projects []models.Project
+	currentYear int
+	Project     models.Project
+	Projects    []models.Project
+}
+
+func NewTemplateData() templateData {
+	return templateData{currentYear: time.Now().Year()}
 }
 
 type templateCache struct {

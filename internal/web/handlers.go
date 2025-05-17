@@ -23,7 +23,8 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := templateData{Projects: projects}
+	data := NewTemplateData()
+	data.Projects = projects
 
 	h.render(w, r, "home", data)
 }
@@ -41,7 +42,8 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := templateData{Project: project}
+	data := NewTemplateData()
+	data.Project = project
 
 	h.render(w, r, "view", data)
 }
