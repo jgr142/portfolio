@@ -8,11 +8,12 @@ import (
 
 type Handler struct {
 	dal    DAL
+	tCache templateCache
 	logger *slog.Logger
 }
 
 func InitHandlers(dal DAL, tCache templateCache, logger *slog.Logger) Handler {
-	return Handler{dal: dal, logger: logger}
+	return Handler{dal: dal, tCache: tCache, logger: logger}
 }
 
 func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
