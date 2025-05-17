@@ -1,7 +1,6 @@
 package web
 
 import (
-	"html/template"
 	"log/slog"
 	"net/http"
 	"strconv"
@@ -23,12 +22,6 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 		"./ui/html/pages/home.tmpl.html",
 	}
 
-	tp, err := template.ParseFiles(files...)
-	if err != nil {
-		h.serverError(w, r, err)
-		return
-	}
-
 	projects, err := h.dal.Latest()
 	if err != nil {
 		h.serverError(w, r, err)
@@ -37,11 +30,7 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 
 	data := templateData{Projects: projects}
 
-	err = tp.Execute(w, data)
-	if err != nil {
-		h.serverError(w, r, err)
-		return
-	}
+	h.render(w, r, files, data)
 }
 
 func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
@@ -56,12 +45,6 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 		"./ui/html/pages/view.tmpl.html",
 	}
 
-	tp, err := template.ParseFiles(files...)
-	if err != nil {
-		h.serverError(w, r, err)
-		return
-	}
-
 	project, err := h.dal.Get(id)
 	if err != nil {
 		h.serverError(w, r, err)
@@ -70,11 +53,7 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 
 	data := templateData{Project: project}
 
-	err = tp.Execute(w, data)
-	if err != nil {
-		h.serverError(w, r, err)
-		return
-	}
+	h.render(w, r, files, data)
 }
 
 func (h *Handler) projectCreate(w http.ResponseWriter, r *http.Request) {
@@ -83,17 +62,7 @@ func (h *Handler) projectCreate(w http.ResponseWriter, r *http.Request) {
 		"./ui/html/pages/create.tmpl.html",
 	}
 
-	tp, err := template.ParseFiles(files...)
-	if err != nil {
-		h.serverError(w, r, err)
-		return
-	}
-
-	err = tp.Execute(w, nil)
-	if err != nil {
-		h.serverError(w, r, err)
-		return
-	}
+	h.render(w, r, files, templateData{})
 }
 
 func (h *Handler) snippetCreatePost(w http.ResponseWriter, r *http.Request) {
