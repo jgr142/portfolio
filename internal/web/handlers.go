@@ -29,11 +29,13 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := h.dal.Latest()
+	projects, err := h.dal.Latest()
 	if err != nil {
 		h.serverError(w, r, err)
 		return
 	}
+
+	data := templateData{Projects: projects}
 
 	err = tp.Execute(w, data)
 	if err != nil {
@@ -60,11 +62,13 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := h.dal.Get(id)
+	project, err := h.dal.Get(id)
 	if err != nil {
 		h.serverError(w, r, err)
 		return
 	}
+
+	data := templateData{Project: project}
 
 	err = tp.Execute(w, data)
 	if err != nil {
