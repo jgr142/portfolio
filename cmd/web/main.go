@@ -3,18 +3,18 @@ package main
 import (
 	"net/http"
 
-	"github.com/jgr142/portfolio/internal/core"
+	"github.com/jgr142/portfolio/internal/platform"
 	"github.com/jgr142/portfolio/internal/web"
 )
 
 func main() {
-	core := core.New(nil)
+	platform := platform.New(nil)
 
-	handlers := web.InitHandlers(core.Logger)
+	handlers := web.InitHandlers(platform.Logger)
 	mux := web.InitMux(handlers)
 
-	core.Logger.Info("starting server on :4000")
+	platform.Logger.Info("starting server on :4000")
 
 	err := http.ListenAndServe(":4000", mux)
-	core.Logger.Error(err.Error())
+	platform.Logger.Error(err.Error())
 }
