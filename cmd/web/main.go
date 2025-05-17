@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"net/http"
 	"os"
 
@@ -10,9 +11,13 @@ import (
 )
 
 func main() {
+	addr := flag.String("addr", ":4000", "HTTP network address")
+	dsn := flag.String("dsn", "web:MaddenPro_101@/snippetbox?parseTime=true", "MySQL data source name")
+	flag.Parse()
+
 	p := platform.New(nil)
 
-	sql, err := db.Open("web:MaddenPro_101@/portfolio?parseTime=true")
+	sql, err := db.Open(*dsn)
 	if err != nil {
 		p.Logger.Error(err.Error())
 		os.Exit(1)
@@ -31,8 +36,8 @@ func main() {
 	handlers := web.InitHandlers(dal, tCache, p.Logger)
 	mux := web.InitMux(handlers)
 
-	p.Logger.Info("starting server on :4000")
+	p.Logger.Info("starting server on %s", addr)
 
-	err = http.ListenAndServe(":4000", mux)
+	err = http.ListenAndServe(*addr, mux)
 	p.Logger.Error(err.Error())
 }
