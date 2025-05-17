@@ -25,31 +25,19 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 
 	tp, err := template.ParseFiles(files...)
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 
 	data, err := h.dal.Latest()
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 
 	err = tp.Execute(w, data)
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 }
@@ -69,31 +57,19 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 
 	tp, err := template.ParseFiles(files...)
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 
 	data, err := h.dal.Get(id)
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 
 	err = tp.Execute(w, data)
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 }
@@ -106,21 +82,13 @@ func (h *Handler) projectCreate(w http.ResponseWriter, r *http.Request) {
 
 	tp, err := template.ParseFiles(files...)
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 
 	err = tp.Execute(w, nil)
 	if err != nil {
-		h.logger.Error("internal server error", slog.String("err", err.Error()))
-		http.Error(w,
-			http.StatusText(http.StatusInternalServerError),
-			http.StatusInternalServerError,
-		)
+		h.serverError(w, r, err)
 		return
 	}
 }
