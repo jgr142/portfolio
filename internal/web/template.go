@@ -1,6 +1,7 @@
 package web
 
 import (
+	"bytes"
 	"errors"
 	"html/template"
 	"net/http"
@@ -31,11 +32,14 @@ func (h *Handler) render(
 		return
 	}
 
-	err = tp.Execute(w, data)
+	buf := new(bytes.Buffer)
+	err = tp.Execute(buf, data)
 	if err != nil {
 		h.serverError(w, r, err)
 		return
 	}
+
+	buf.WriteTo(w)
 }
 
 func NewTemplateCache() (templateCache, error) {
