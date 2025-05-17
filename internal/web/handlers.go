@@ -8,11 +8,12 @@ import (
 )
 
 type Handler struct {
+	dal    DAL
 	logger *slog.Logger
 }
 
-func InitHandlers(logger *slog.Logger) Handler {
-	return Handler{logger: logger}
+func InitHandlers(dal DAL, logger *slog.Logger) Handler {
+	return Handler{dal: dal, logger: logger}
 }
 
 func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +33,17 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tp.Execute(w, nil)
+	data, err := h.dal.Latest()
+	if err != nil {
+		h.logger.Error("internal server error", slog.String("err", err.Error()))
+		http.Error(w,
+			http.StatusText(http.StatusInternalServerError),
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	err = tp.Execute(w, data)
 	if err != nil {
 		h.logger.Error("internal server error", slog.String("err", err.Error()))
 		http.Error(w,
@@ -66,7 +77,17 @@ func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = tp.Execute(w, nil)
+	data, err := h.dal.Get(id)
+	if err != nil {
+		h.logger.Error("internal server error", slog.String("err", err.Error()))
+		http.Error(w,
+			http.StatusText(http.StatusInternalServerError),
+			http.StatusInternalServerError,
+		)
+		return
+	}
+
+	err = tp.Execute(w, data)
 	if err != nil {
 		h.logger.Error("internal server error", slog.String("err", err.Error()))
 		http.Error(w,
