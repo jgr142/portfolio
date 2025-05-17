@@ -11,7 +11,7 @@ type Handler struct {
 	logger *slog.Logger
 }
 
-func InitHandlers(dal DAL, logger *slog.Logger) Handler {
+func InitHandlers(dal DAL, tCache templateCache, logger *slog.Logger) Handler {
 	return Handler{dal: dal, logger: logger}
 }
 

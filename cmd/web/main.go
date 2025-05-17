@@ -22,7 +22,13 @@ func main() {
 
 	dal := db.New(sql)
 
-	handlers := web.InitHandlers(dal, p.Logger)
+	tCache, err := web.NewTemplateCache()
+	if err != nil {
+		p.Logger.Error(err.Error())
+		os.Exit(1)
+	}
+
+	handlers := web.InitHandlers(dal, tCache, p.Logger)
 	mux := web.InitMux(handlers)
 
 	p.Logger.Info("starting server on :4000")
