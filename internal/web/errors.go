@@ -26,3 +26,10 @@ func (h *Handler) serverError(
 		http.StatusInternalServerError,
 	)
 }
+
+func (h *Handler) clientError(
+	w http.ResponseWriter,
+	status int,
+) {
+	http.Error(w, http.StatusText(status), status)
+}

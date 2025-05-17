@@ -45,8 +45,7 @@ func (h *Handler) home(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) projectView(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil || id < 1 {
-		h.logger.Error("client error", slog.String("err", err.Error()))
-		http.NotFound(w, r)
+		h.clientError(w, http.StatusNotFound)
 		return
 	}
 
