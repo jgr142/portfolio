@@ -6,14 +6,14 @@ import (
 	"net/http"
 	"os"
 
+	web "github.com/jgr142/portfolio/hui"
 	"github.com/jgr142/portfolio/internal/infra/db"
 	"github.com/jgr142/portfolio/internal/platform"
-	"github.com/jgr142/portfolio/internal/web"
 )
 
 func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
-	dsn := flag.String("dsn", "web:MaddenPro_101@/snippetbox?parseTime=true", "MySQL data source name")
+	dsn := flag.String("dsn", "web:MaddenPro_101@/portfolio?parseTime=true", "MySQL data source name")
 	flag.Parse()
 
 	p := platform.New(nil)
